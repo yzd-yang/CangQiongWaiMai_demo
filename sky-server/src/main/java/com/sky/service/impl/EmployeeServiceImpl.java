@@ -90,7 +90,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         BaseContext.removeCurrentId();
         employeeMapper.insert(employee);
     }
-
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         //开始分页查询
@@ -100,6 +104,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> result = page.getResult();
 
         return new PageResult(total,result);
+    }
+
+    /**
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .updateTime(LocalDateTime.now())
+                .updateUser(BaseContext.getCurrentId())
+                .build();
+        //设置员工状态
+        employeeMapper.update(employee);
     }
 
 }
