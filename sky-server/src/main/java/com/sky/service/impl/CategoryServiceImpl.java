@@ -11,6 +11,7 @@ import com.sky.entity.Category;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.CategoryMapper;
 import com.sky.mapper.DishMapper;
+import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryMapper categoryMapper;
     @Autowired
     private DishMapper dishMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
     /**
      * 分类分页查询
      * @param categoryPageQueryDTO
@@ -66,6 +69,12 @@ public class CategoryServiceImpl implements CategoryService {
         //看是否关联菜品
         Integer count = dishMapper.countByCategoryId(id);
         if(count>0){
+            //当前分类下有菜品，不能删除
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
+        }
+        //查询当前分类是否关联了套餐，如果关联了就抛出业务异常
+        count = setmealMapper.countByCategoryId(id);
+        if(count > 0){
             //当前分类下有菜品，不能删除
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
         }
