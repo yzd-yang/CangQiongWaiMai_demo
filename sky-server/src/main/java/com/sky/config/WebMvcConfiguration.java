@@ -69,6 +69,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+
+        // 添加外部static目录映射
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/", "file:./sky-server/src/main/resources/static/");
     }
     /**
      * 扩展Spring MVC框架的消息转化器
@@ -83,4 +88,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         //将自己的消息转化器加入容器中
         converters.add(0,converter);
     }
+
+
+
 }
