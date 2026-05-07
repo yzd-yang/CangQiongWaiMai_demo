@@ -7,4 +7,19 @@
         values
             (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser}, #{status})
     </insert>
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        SELECT d.*,c.name as categoryName FROM dish as d LEFT JOIN category as c ON d.category_id=c.id
+        <where>
+            <if test="name != null and name != ''">
+                and d.name like '%${name}%'
+            </if>
+            <if test="categoryId != null">
+                and d.category_id=#{categoryId}
+            </if>
+            <if test="status != null">
+                and d.status=#{status}
+            </if>
+        </where>
+        order by d.update_time desc
+    </select>
 </mapper>
