@@ -146,9 +146,12 @@ public class DishServiceImpl implements DishService {
 
 //TODO
         //删除菜品的图片
-        fileUploadUtil.delete(dish.getImage());
-        log.info("删除图片：{}",dish.getImage());
+        Dish byId = dishMapper.getById(dish.getId());
+        if(byId.getImage().equals(dish.getImage())){
+            fileUploadUtil.delete(dish.getImage());
+            log.info("删除图片：{}",dish.getImage());
 
+        }
         //修改菜品表
         dishMapper.update(dish);
 
@@ -163,4 +166,18 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
     }
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .status(StatusConstant.ENABLE)
+                .categoryId(categoryId)
+                .build();
+        return dishMapper.list(dish);
+    }
+
 }
