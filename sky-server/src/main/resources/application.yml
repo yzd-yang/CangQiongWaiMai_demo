@@ -43,8 +43,16 @@ sky:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
+    user-secret-key: itheima
+    user-ttl: 7200000
+    user-token-name: authentication
+
   mvc:
     static-path-pattern: /**
   web:
     resources:
       static-locations: classpath:/static/, file:./static/
+
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
