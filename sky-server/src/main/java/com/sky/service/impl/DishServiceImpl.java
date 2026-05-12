@@ -211,6 +211,7 @@ public class DishServiceImpl implements DishService {
      * @param id
      */
     @Override
+    @Transactional
     public void startOrStop(Integer status, Long id) {
         Dish dish = Dish.builder()
                 .status(status)
