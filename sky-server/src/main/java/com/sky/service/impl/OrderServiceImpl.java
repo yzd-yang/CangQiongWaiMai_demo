@@ -136,9 +136,10 @@ public class OrderServiceImpl implements OrderService {
         LocalDateTime checkoutTime = LocalDateTime.now(); // 支付时间
 
         currentOrderId = ordersPaymentDTO.getOrderNumber();
+        Long userId = BaseContext.getCurrentId();
         // 4. 关键步骤：更新数据库订单状态
         if (!currentOrderId.isEmpty()) {
-            orderMapper.updateStatus(orderStatus, orderPaidStatus, checkoutTime, currentOrderId);
+            orderMapper.updateStatus(userId,orderStatus, orderPaidStatus, checkoutTime, currentOrderId);
         } else {
             // 日志记录或异常处理：未找到当前订单ID
             log.warn("未找到当前订单ID，无法更新订单状态");

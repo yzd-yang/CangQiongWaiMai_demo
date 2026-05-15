@@ -21,5 +21,5 @@ public interface OrderMapper {
      * @param checkoutTime
      * @param currentOrderId
      */
-    void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime checkoutTime, String currentOrderId);
+    void updateStatus(Long userId,Integer orderStatus, Integer orderPaidStatus, LocalDateTime checkoutTime, String currentOrderId);
 }

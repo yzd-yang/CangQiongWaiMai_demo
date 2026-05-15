@@ -23,5 +23,6 @@
             </if>
 
         </set>
+        where id=#{userId}
     </update>
 </mapper>
