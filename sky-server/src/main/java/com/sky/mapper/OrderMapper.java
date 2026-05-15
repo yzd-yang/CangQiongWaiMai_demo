@@ -24,7 +24,7 @@ public interface OrderMapper {
      * @param checkoutTime
      * @param currentOrderId
      */
-    void updateStatus(Long userId,Integer orderStatus, Integer orderPaidStatus, LocalDateTime checkoutTime, String currentOrderId);
+    void updateStatus(Integer orderStatus, Integer orderPaidStatus, LocalDateTime checkoutTime, String currentOrderId);
     /**
      * 分页条件查询并按下单时间排序
      * @param ordersPageQueryDTO

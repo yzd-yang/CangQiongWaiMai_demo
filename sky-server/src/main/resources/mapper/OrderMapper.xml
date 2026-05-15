@@ -23,7 +23,7 @@
             </if>
 
         </set>
-        where id=#{userId}
+        where id=#{currentOrderId}
     </update>
     <update id="update">
         update orders
