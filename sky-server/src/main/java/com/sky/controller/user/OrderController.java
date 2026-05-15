@@ -88,4 +88,16 @@ public class OrderController {
         orderService.userCancelById(id);
         return Result.success();
     }
+
+    /**
+     * 用户再来一单
+     * @param id
+     */
+    @PostMapping("/repetition/{id}")
+    @ApiOperation("再来一单")
+    public Result repetition(@PathVariable("id") Long id) {
+        log.info("再来一单：{}", id);
+        orderService.repetition(id);
+        return Result.success();
+    }
 }
