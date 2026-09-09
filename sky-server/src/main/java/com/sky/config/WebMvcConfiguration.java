@@ -3,6 +3,8 @@ package com.sky.config;
 import com.sky.interceptor.JwtTokenAdminInterceptor;
 import com.sky.interceptor.JwtTokenUserInterceptor;
 import com.sky.json.JacksonObjectMapper;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,12 +14,6 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.List;
 
@@ -50,41 +46,13 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .excludePathPatterns("/user/shop/login");
     }
 
-    /**
-     * 通过knife4j生成接口文档
-     * @return
-     */
     @Bean
-    public Docket docket1() {
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("苍穹外卖项目接口文档")
-                .version("2.0")
-                .description("苍穹外卖项目接口文档")
-                .build();
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("管理端接口")
-                .apiInfo(apiInfo)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.admin"))
-                .paths(PathSelectors.any())
-                .build();
-        return docket;
-    }
-    @Bean
-    public Docket docket2() {
-        ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("苍穹外卖项目接口文档")
-                .version("2.0")
-                .description("苍穹外卖项目接口文档")
-                .build();
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
-                .groupName("用户端接口")
-                .apiInfo(apiInfo)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))
-                .paths(PathSelectors.any())
-                .build();
-        return docket;
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("苍穹外卖项目接口文档")
+                        .version("2.0")
+                        .description("苍穹外卖项目接口文档"));
     }
 
     /**
@@ -95,25 +63,22 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
 
-
         // 添加外部static目录映射
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/", "file:./sky-server/src/main/resources/static/");
     }
+
     /**
      * 扩展Spring MVC框架的消息转化器
-     * @param converters
+     * 注意：不要 converters.add(0, ...) 插入新的 Jackson converter，
+     * 否则会接管 springdoc 的 byte[]/String 响应，导致 Knife4j 收到 Base64。
      */
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         log.info("扩展消息转换器...");
-        //创建一个消息转换器对象
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        //需要为消息转换器设置一个对象转换器，对象转换器可以将Java对象序列化为json数据
-        converter.setObjectMapper(new JacksonObjectMapper());
-        //将自己的消息转化器加入容器中
-        converters.add(0,converter);
+        for (HttpMessageConverter<?> converter : converters) {
+            if (converter instanceof MappingJackson2HttpMessageConverter jacksonConverter) {
+                jacksonConverter.setObjectMapper(new JacksonObjectMapper());
+            }
+        }
     }
-
-
-
 }

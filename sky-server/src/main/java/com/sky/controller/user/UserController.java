@@ -8,7 +8,7 @@ import com.sky.result.Result;
 import com.sky.service.UserService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.UserLoginVO;
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user/user")
-@Api(tags = "C端用户接口")
+@Tag(name = "C端用户接口")
 @Slf4j
 public class UserController {
     @Autowired

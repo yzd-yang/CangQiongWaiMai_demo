@@ -12,11 +12,33 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
-  redis:
-    host: ${sky.redis.host}
-    port: ${sky.redis.port}
-    password: ${sky.redis.password}
-    database: ${sky.redis.database}
+  data:
+    redis:
+      host: ${sky.redis.host}
+      port: ${sky.redis.port}
+      password: ${sky.redis.password}
+      database: ${sky.redis.database}
+
+# Knife4j Next（Boot 3.4）：https://knife4jnext.com/guide/getting-started
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+    # springdoc 2.8 默认 OAS 3.1；Knife4j 字段树对部分 $ref 展示会降级，强制 3.0 更稳
+    version: openapi_3_0
+  group-configs:
+    - group: 管理端接口
+      packages-to-scan: com.sky.controller.admin
+    - group: 用户端接口
+      packages-to-scan: com.sky.controller.user
 
 mybatis:
   #mapper配置文件

@@ -9,8 +9,8 @@ import com.sky.mapper.DishMapper;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/admin/category")
-@Api(tags = "分类管理")
+@Tag(name = "分类管理")
 @Slf4j
 public class CategoryController {
     @Autowired
@@ -34,7 +34,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/page")
-    @ApiOperation("分类分页查询")
+    @Operation(summary = "分类分页查询")
     public Result<PageResult> page(CategoryPageQueryDTO categoryPageQueryDTO){
        PageResult pageResult = categoryService.pageQuery(categoryPageQueryDTO);
 
@@ -47,7 +47,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping
-    @ApiOperation("新增分类")
+    @Operation(summary = "新增分类")
     public Result save(@RequestBody CategoryDTO categoryDTO){
         log.info("新增分类：{}",categoryDTO);
         categoryService.save(categoryDTO);
@@ -59,7 +59,7 @@ public class CategoryController {
      * @param id
      */
     @DeleteMapping
-    @ApiOperation("根据id删除分类")
+    @Operation(summary = "根据id删除分类")
     public Result deleteById(Long id){
         log.info("根据id删除分类：{}",id);
         categoryService.deleteById(id);
@@ -73,7 +73,7 @@ public class CategoryController {
      * @return
      */
     @PutMapping
-    @ApiOperation("修改分类")
+    @Operation(summary = "修改分类")
     public Result update(@RequestBody CategoryDTO categoryDTO){
         categoryService.update(categoryDTO);
         return Result.success();
@@ -86,7 +86,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping("/status/{status}")
-    @ApiOperation("启用、禁用分类")
+    @Operation(summary = "启用、禁用分类")
     public Result startOrStop(@PathVariable("status") Integer status,Long id){
         categoryService.startOrStop(status,id);
         return Result.success();
@@ -97,7 +97,7 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/list")
-    @ApiOperation("根据类型查询分类")
+    @Operation(summary = "根据类型查询分类")
     public Result<List<Category>>  list(Integer type){
         List<Category>  list =categoryService.list(type);
         return Result.success(list);

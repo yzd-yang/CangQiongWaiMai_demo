@@ -2,8 +2,8 @@ package com.sky.controller.admin;
 
 import com.sky.result.Result;
 import com.sky.utils.FileUploadUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @RestController
 @RequestMapping("/admin/common")
-@Api(tags = "通用接口")
+@Tag(name = "通用接口")
 public class CommonController {
 
     private final FileUploadUtil fileUploadUtil;
@@ -24,7 +24,7 @@ public class CommonController {
         this.fileUploadUtil = fileUploadUtil;
     }
 
-    @ApiOperation("文件上传")
+    @Operation(summary = "文件上传")
     @PostMapping("/upload")
     public Result<String> upload(MultipartFile  file){
         log.info("文件上传：{}",file);

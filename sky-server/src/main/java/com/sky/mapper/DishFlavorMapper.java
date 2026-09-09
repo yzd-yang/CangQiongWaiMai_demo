@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
