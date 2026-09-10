@@ -1,0 +1,17 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "C:\\Users\\yzd\\.jdks\\ms-21.0.11",
+            "default": true
+        }
+    ],
+    "java.jdt.ls.java.home": "C:\\Users\\yzd\\.jdks\\ms-21.0.11",
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "C:\\Users\\yzd\\.jdks\\ms-21.0.11"
+        }
+    ]
+}
