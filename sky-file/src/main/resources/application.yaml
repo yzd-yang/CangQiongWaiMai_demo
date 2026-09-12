@@ -1,26 +1,15 @@
 server:
-  port: 8085
+  port: 8086
 spring:
   application:
-    name: sky-pay
+    name: sky-file
   profiles:
     active: local
   cloud:
     nacos:
       discovery:
         server-addr: 192.168.6.128:8848   # 你的 Nacos
-  datasource:
-    druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${sky.datasource.username}
-      password: ${sky.datasource.password}
-  data:
-    redis:
-      host: ${sky.redis.host}
-      port: ${sky.redis.port}
-      password: ${sky.redis.password}
-      database: ${sky.redis.database}
+
 
 springdoc:
   swagger-ui:

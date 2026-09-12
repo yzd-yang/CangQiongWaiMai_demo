@@ -20,4 +20,5 @@ public class AddressBookInnerController {
     public Result<AddressBook> getById(@PathVariable Long id) {
         return Result.success(addressBookService.getById(id));
     }
+
 }

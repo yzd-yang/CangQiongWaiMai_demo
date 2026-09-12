@@ -57,6 +57,31 @@ public class OrderServiceImpl implements OrderService {
 
     // 假设这是一个全局变量或通过其他方式传递的当前订单ID
     private String currentOrderId;
+
+    // 订单支付成功
+    @Override
+    @Transactional
+    public void paySuccess(String orderNumber) {
+        if (orderNumber == null || orderNumber.isEmpty()) {
+            throw new OrderBusinessException("订单号为空");
+        }
+
+        Integer orderPaidStatus = Orders.PAID;
+        Integer orderStatus = Orders.TO_BE_CONFIRMED;
+        LocalDateTime checkoutTime = LocalDateTime.now();
+
+        // 直接用入参订单号更新（updateStatus 最后一个参数就是 number）
+        orderMapper.updateStatus(orderStatus, orderPaidStatus, checkoutTime, orderNumber);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", 1);
+        map.put("orderId", orderNumber);
+        map.put("content", "订单号" + orderNumber);
+        String json = JSONObject.toJSONString(map);
+        log.info("发送WebSocket消息:{}", json);
+        webSocketServer.sendToAllClient(json);
+    }
+
     /**
      * 用户下单
      * @param ordersSubmitDTO

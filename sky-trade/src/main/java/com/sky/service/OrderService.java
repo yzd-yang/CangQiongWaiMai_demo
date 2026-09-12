@@ -8,6 +8,9 @@ import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 
 public interface OrderService {
+
+    void paySuccess(String orderNumber);
+
     /**
      *  用户下单
      * @param ordersSubmitDTO

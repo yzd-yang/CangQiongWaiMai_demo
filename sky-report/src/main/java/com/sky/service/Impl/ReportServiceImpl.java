@@ -1,24 +1,22 @@
-package com.sky.service.impl;
+package com.sky.service.Impl;
 
 import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
-import com.sky.mapper.OrderMapper;
-import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
 import com.sky.service.WorkspaceService;
+import com.sky.skyapi.client.OrderClient;
+import com.sky.skyapi.client.UserClient;
 import com.sky.vo.*;
-import com.sky.vo.*;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.ServletOutputStream;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -33,10 +31,15 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ReportServiceImpl implements ReportService {
+//    @Autowired
+//    private OrderMapper orderMapper;
+//    @Autowired
+//    private UserMapper userMapper;
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderClient orderClient;
     @Autowired
-    private UserMapper userMapper;
+    private UserClient userClient;
+
     @Autowired
     private WorkspaceService workspaceService;
     /**
@@ -60,11 +63,11 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime bLocalDateTime = LocalDateTime.of(localDate, LocalTime.MIN);
             LocalDateTime eLocalDateTime = LocalDateTime.of(localDate, LocalTime.MAX);
 
-            Map map = new HashMap();
+            Map<String, Object> map = new HashMap<>();
             map.put("begin",bLocalDateTime);
             map.put("end",eLocalDateTime);
             map.put("status", Orders.COMPLETED);
-            Double turnover = orderMapper.sumByMap(map);
+            Double turnover = orderClient.sumAmount(map);
             turnover = turnover == null ? 0.0 : turnover;
             turnoverList.add( turnover);
         }
@@ -141,11 +144,11 @@ public class ReportServiceImpl implements ReportService {
      * @return
      */
     private Integer getOrderCount(LocalDateTime beginTime, LocalDateTime endTime, Integer status){
-        Map map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map .put("begin",beginTime);
         map.put("end",endTime);
         map.put("status",status);
-        return orderMapper.countByMap(map);
+        return orderClient.count(map);
     }
 
     /**
@@ -167,7 +170,7 @@ public class ReportServiceImpl implements ReportService {
         // ORDER BY number desc
         // LIMIT 10
         
-        ArrayList<GoodsSalesDTO> salesTop10=orderMapper.getSalesTop10(beginTime,endTime);
+        ArrayList<GoodsSalesDTO> salesTop10=orderClient.getSalesTop10(beginTime,endTime);
         //名称列表
         List<String> collect = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
         String nameList = StringUtils.join(collect, ",");
@@ -278,9 +281,9 @@ public class ReportServiceImpl implements ReportService {
      * @return
      */
     private Integer getUserCount(LocalDateTime beginTime, LocalDateTime endTime) {
-        Map map = new HashMap();
+        Map<String, Object> map = new HashMap<>();
         map.put("begin",beginTime);
         map.put("end", endTime);
-        return userMapper.countByMap(map);
+        return userClient.count(map);
     }
 }
