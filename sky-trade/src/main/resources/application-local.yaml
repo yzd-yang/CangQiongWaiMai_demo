@@ -3,7 +3,7 @@ sky:
     driver-class-name: com.mysql.cj.jdbc.Driver
     host: 192.168.6.128
     port: 3306
-    database: sky_user         # 关键：只连自己的库
+    database: sky_trade         # 关键：只连自己的库
     username: root
     password: 123
 #  redis:

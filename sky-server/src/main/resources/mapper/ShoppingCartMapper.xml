@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sky.mapper.ShoppingCartMapper">
+<mapper namespace="mapper.com.sky.ShoppingCartMapper">
     <insert id="insertBatch">
         insert into shopping_cart (name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time) values
         <foreach collection="shoppingCartList" item="sh" separator=",">

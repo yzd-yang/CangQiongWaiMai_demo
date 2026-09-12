@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: sky-product
+    name: sky-user
   profiles:
     active: local
   cloud:
@@ -15,12 +15,12 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
-  data:
-    redis:
-      host: ${sky.redis.host}
-      port: ${sky.redis.port}
-      password: ${sky.redis.password}
-      database: ${sky.redis.database}
+#  data:
+#    redis:
+#      host: ${sky.redis.host}
+#      port: ${sky.redis.port}
+#      password: ${sky.redis.password}
+#      database: ${sky.redis.database}
 
 springdoc:
   swagger-ui:

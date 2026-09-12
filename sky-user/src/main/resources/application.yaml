@@ -1,8 +1,8 @@
 server:
-  port: 8082
+  port: 8081
 spring:
   application:
-    name: sky-product
+    name: sky-user
   profiles:
     active: local
   cloud:
@@ -32,7 +32,7 @@ springdoc:
   group-configs:
     - group: default
       paths-to-match: /**
-      packages-to-scan: com.sky.controller
+      packages-to-scan: com.sky.skyuser.controller
 
 knife4j:
   enable: true
