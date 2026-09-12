@@ -15,7 +15,6 @@
     <modules>
         <module>sky-common</module>
         <module>sky-pojo</module>
-        <module>sky-server</module>
         <module>sky-api</module>
         <module>sky-user</module>
         <module>sky-product</module>
