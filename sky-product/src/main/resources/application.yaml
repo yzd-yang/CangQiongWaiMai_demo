@@ -15,9 +15,9 @@ spring:
       http-method-specify: true # 开启请求方式前缀
     nacos:
       discovery:
-        server-addr: 192.168.6.128:8848   # 你的 Nacos
+        server-addr: ${NACOS_ADDR:192.168.6.128:8848}
       config:
-        server-addr: 192.168.6.128:8848
+        server-addr: ${NACOS_ADDR:192.168.6.128:8848}
         file-extension: yaml
   datasource:
     druid:

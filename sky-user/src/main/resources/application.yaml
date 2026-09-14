@@ -8,7 +8,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.6.128:8848   # 你的 Nacos
+        server-addr: ${NACOS_ADDR:192.168.6.128:8848}
       config:
         import-check:
           enabled: false # 禁用导入检查

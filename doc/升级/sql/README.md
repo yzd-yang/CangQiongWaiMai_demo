@@ -6,8 +6,10 @@
 | ---- | ---- | -- |
 | [sky_user.sql](./sky_user.sql) | `sky_user` | `user`、`address_book`、`employee`（含 admin 初始数据） |
 | [sky_product.sql](./sky_product.sql) | `sky_product` | `category`、`dish`、`dish_flavor`、`setmeal`、`setmeal_dish`（含分类/菜品/口味初始数据） |
-| [sky_trade.sql](./sky_trade.sql) | `sky_trade` | `shopping_cart`、`orders`、`order_detail` |
-| [sky_pay.sql](./sky_pay.sql) | `sky_pay` | `payment`（可选；mock 支付可跳过） |
+| [sky_trade.sql](./sky_trade.sql) | `sky_trade` | `shopping_cart`、`orders`、`order_detail`、`undo_log` |
+| [sky_pay.sql](./sky_pay.sql) | `sky_pay` | `payment`、`undo_log` |
+
+`docker compose up`（见仓库 `deploy/`）会在 **MySQL 数据卷首次创建** 时自动导入上述脚本。
 
 ## 导入示例
 
@@ -15,7 +17,6 @@
 mysql -h192.168.6.128 -uroot -p123 < doc/升级/sql/sky_user.sql
 mysql -h192.168.6.128 -uroot -p123 < doc/升级/sql/sky_product.sql
 mysql -h192.168.6.128 -uroot -p123 < doc/升级/sql/sky_trade.sql
-# 可选
 mysql -h192.168.6.128 -uroot -p123 < doc/升级/sql/sky_pay.sql
 ```
 

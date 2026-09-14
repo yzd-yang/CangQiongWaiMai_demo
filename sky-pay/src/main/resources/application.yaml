@@ -8,7 +8,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.6.128:8848   # 你的 Nacos
+        server-addr: ${NACOS_ADDR:192.168.6.128:8848}
   datasource:
     druid:
       driver-class-name: ${sky.datasource.driver-class-name}
@@ -26,7 +26,7 @@ seata:
     vgroup-mapping:
       default_tx_group: default
     grouplist:
-      default: 192.168.6.128:8091  # 或你映射后的 8091
+      default: ${SEATA_ADDR:192.168.6.128:8091}
 
 
 
