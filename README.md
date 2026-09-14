@@ -1,6 +1,12 @@
 # 苍穹外卖（sky-take-out）
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Java](https://img.shields.io/badge/Java-21-orange)](https://openjdk.org/projects/jdk/21/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.3-brightgreen)](https://spring.io/projects/spring-boot)
+
 Spring Boot **3.4.3** + JDK **21** 微服务练习项目：网关统一入口、Nacos 注册、OpenFeign、Sentinel、Seata（支付改单）。
+
+本仓库已开源（MIT）。原「苍穹外卖」教学案例版权见 [NOTICE.md](./NOTICE.md)。
 
 升级与拆分过程见 [doc/升级/开发方案.md](doc/升级/开发方案.md)。阶段清单：[0](doc/升级/阶段0.md) → [1](doc/升级/阶段1.md) → [2](doc/升级/阶段2.md) → [3](doc/升级/阶段3.md) → [4](doc/升级/阶段4.md) → [5](doc/升级/阶段5.md) → [6](doc/升级/阶段6.md)。
 
@@ -130,3 +136,10 @@ docker compose --profile apps up -d --build
 | `sky-server` | 历史单体，对照用，不要再作为入口 |
 
 更完整的业务说明：[doc/项目文档.md](doc/项目文档.md)。
+
+## 开源许可
+
+采用 [MIT License](./LICENSE)。欢迎 Star、Fork 与提 Issue。
+
+学习用途请保留对原课程案例的致谢（[NOTICE.md](./NOTICE.md)）。
+
