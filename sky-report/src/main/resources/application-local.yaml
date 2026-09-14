@@ -1,15 +1,3 @@
-sky:
-  jwt:                             # 从 sky-server 拷 admin/user 两套
-    # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: itcast
-    # 设置jwt过期时间
-    admin-ttl: 720000000
-    # 设置前端传递过来的令牌名称
-    admin-token-name: token
-
-    user-secret-key: itheima
-    user-ttl: 7200000
-    user-token-name: authentication
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.sky.entity

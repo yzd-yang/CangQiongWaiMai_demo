@@ -6,12 +6,19 @@ spring:
   profiles:
     active: local
   cloud:
+    sentinel:
+      transport:
+        dashboard: ${sky.cloud.sentinel.transport.dashboard} # 配置Sentinel控制台地址
+      http-method-specify: true # 开启请求方式前缀
     nacos:
       discovery:
         server-addr: 192.168.6.128:8848   # 你的 Nacos
+      config:
+        import-check:
+          enabled: false # 禁用导入检查
   datasource:
     druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
+      driver-class-name:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
@@ -22,6 +29,21 @@ spring:
       password: ${sky.redis.password}
       database: ${sky.redis.database}
 
+## Seata
+seata:
+  registry:
+    type: file
+  config:
+    type: file
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default
+    grouplist:
+      default: 192.168.6.128:8091
+feign:
+  sentinel:
+    enabled: true # 开启feign对sentinel的支持
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

@@ -53,6 +53,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 //添加的是菜品
                 //Client
                 Dish dish = productClient.getDishById(dishId);
+                if (dish == null) {
+                    throw new RuntimeException("商品服务繁忙，请稍后再试"); // 或项目里的业务异常
+                }
                 shoppingCart.setName(dish.getName());
                 shoppingCart.setImage(dish.getImage());
                 shoppingCart.setAmount(dish.getPrice());
@@ -61,6 +64,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 Long setmealId = shoppingCart.getSetmealId();
                 //Client
                 Setmeal setmeal = productClient.getSetmealById(setmealId);
+                if (setmeal == null) {
+                    throw new RuntimeException("商品服务繁忙，请稍后再试");
+                }
                 shoppingCart.setName(setmeal.getName());
                 shoppingCart.setImage(setmeal.getImage());
                 shoppingCart.setAmount(setmeal.getPrice());

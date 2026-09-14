@@ -1,30 +1,25 @@
 package com.sky.skyuser.interceptor;
 
-import com.sky.constant.JwtClaimsConstant;
+
 import com.sky.context.BaseContext;
-import com.sky.properties.JwtProperties;
-import com.sky.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
- * jwt令牌校验的拦截器
+ * 校验Header的拦截器
  */
 @Component
 @Slf4j
 public class JwtTokenAdminInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private JwtProperties jwtProperties;
 
     /**
-     * 校验jwt
+     * 校验Header
      *
      * @param request
      * @param response
@@ -32,34 +27,33 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
      * @return
      * @throws Exception
      */
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-
-        //判断当前拦截到的是Controller的方法还是其他资源
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (!(handler instanceof HandlerMethod)) {
-            //当前拦截到的不是动态方法，直接放行
             return true;
         }
-
-        //1、从请求头中获取令牌
-        String token = request.getHeader(jwtProperties.getAdminTokenName());
-
-        //2、校验令牌
-        try {
-            log.info("jwt校验:{}", token);
-            Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
-            Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
-            log.info("当前员工id：{}", empId);
-            //设置当前登录用户的id到ThreadLocal中
-            BaseContext.setCurrentId(empId);
-
-            //3、通过，放行
-            return true;
-        } catch (Exception ex) {
-            //4、不通过，响应401状态码
+        String userInfo = request.getHeader("user-info");  // 必须和网关写入的名字一致
+        if (userInfo == null || userInfo.isBlank()) {
             response.setStatus(401);
             return false;
         }
+        try {
+            Long id = Long.valueOf(userInfo);
+            BaseContext.setCurrentId(id);
+            return true;
+        } catch (NumberFormatException e) {
+            response.setStatus(401);
+            return false;
+        }
+    }
+
+    /**
+     * 补上清理 ThreadLocal（线程池复用会串用户）
+     */
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+                                Object handler, Exception ex) {
+        BaseContext.removeCurrentId();
     }
 
 }

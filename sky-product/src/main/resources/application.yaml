@@ -1,26 +1,36 @@
 server:
   port: 8082
 spring:
+  config:
+    import:
+      - optional:nacos:shared-redis.yaml?group=DEFAULT_GROUP
   application:
     name: sky-product
   profiles:
     active: local
   cloud:
+    sentinel:
+      transport:
+        dashboard: ${sky.cloud.sentinel.transport.dashboard} # 配置Sentinel控制台地址
+      http-method-specify: true # 开启请求方式前缀
     nacos:
       discovery:
         server-addr: 192.168.6.128:8848   # 你的 Nacos
+      config:
+        server-addr: 192.168.6.128:8848
+        file-extension: yaml
   datasource:
     druid:
       driver-class-name: ${sky.datasource.driver-class-name}
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
-#  data:
-#    redis:
-#      host: ${sky.redis.host}
-#      port: ${sky.redis.port}
-#      password: ${sky.redis.password}
-#      database: ${sky.redis.database}
+  data:
+    redis:
+      host: ${sky.redis.host}
+      port: ${sky.redis.port}
+      password: ${sky.redis.password}
+      database: ${sky.redis.database}
 
 springdoc:
   swagger-ui:

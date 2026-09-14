@@ -4,3 +4,51 @@ server:
 spring:
   application:
     name: sky-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.6.128:8848
+      config:
+        import-check:
+          enabled: false # 禁用导入检查
+
+    gateway:
+      routes:
+        - id: user-admin
+          uri: lb://sky-user
+          predicates:
+            - Path=/admin/employee/**
+        - id: user-c
+          uri: lb://sky-user
+          predicates:
+            - Path=/user/user/**,/user/addressBook/**
+        - id: product-admin
+          uri: lb://sky-product
+          predicates:
+            - Path=/admin/category/**,/admin/dish/**,/admin/setmeal/**,/admin/shop/**
+        - id: product-user
+          uri: lb://sky-product
+          predicates:
+            - Path=/user/category/**,/user/dish/**,/user/setmeal/**,/user/shop/**
+        - id: trade
+          uri: lb://sky-trade
+          predicates:
+            - Path=/user/shoppingCart/**,/admin/order/**,/user/order/**
+        - id: report
+          uri: lb://sky-report
+          predicates:
+            - Path=/admin/workspace/**,/admin/report/**
+        - id: file
+          uri: lb://sky-file
+          predicates:
+            - Path=/admin/common/upload
+        - id: pay
+          uri: lb://sky-pay
+          predicates:
+            - Path=/pay/**
+        - id: ws
+          uri: lb://sky-trade
+          predicates:
+            - Path=/ws/**
+  profiles:
+    active: local

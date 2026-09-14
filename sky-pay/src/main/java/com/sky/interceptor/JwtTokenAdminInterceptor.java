@@ -1,4 +1,4 @@
-package com.sky.skyuser.interceptor;
+package com.sky.interceptor;
 
 
 import com.sky.context.BaseContext;

@@ -1,6 +1,8 @@
-server:
-  port: 8080
-
-spring:
-  application:
-    name: sky-gateway
+sky:
+  jwt:
+    admin-secret-key: itcast
+    admin-ttl: 720000000
+    admin-token-name: token
+    user-secret-key: itheima
+    user-ttl: 7200000
+    user-token-name: authentication

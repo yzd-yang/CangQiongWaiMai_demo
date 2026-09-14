@@ -1,9 +1,9 @@
-
+# 支付服务不再解析 JWT，鉴权只信网关传入的 user-info
 sky:
-    jwt:
-        admin-secret-key: itcast
-        admin-ttl: 720000000
-        admin-token-name: token
-        user-secret-key: itheima
-        user-ttl: 7200000
-        user-token-name: authentication
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: 192.168.6.128
+    port: 3306
+    database: sky_pay         # 关键：只连自己的库
+    username: root
+    password: 123
