@@ -18,6 +18,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.sky</groupId>
+            <artifactId>sky-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- 不要 spring-boot-starter-web -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

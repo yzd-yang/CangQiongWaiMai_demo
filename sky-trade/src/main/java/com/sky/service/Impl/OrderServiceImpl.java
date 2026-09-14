@@ -19,7 +19,7 @@ import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ShoppingCartMapper;
 import com.sky.result.PageResult;
 import com.sky.service.OrderService;
-import com.sky.skyapi.client.AddressBookClient;
+import com.sky.skyapi.client.UserClient;
 import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 //    @Autowired
 //    private AddressBookMapper addressBookMapper;
     @Autowired
-    private AddressBookClient addressBookClient;
+    private UserClient userClient;
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
     @Autowired
@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderSubmitVO submitOrder(OrdersSubmitDTO ordersSubmitDTO) {
         //业务异常检测(地址为空,购物车为空)
         //获取地址
-        AddressBook addressBook = addressBookClient.getById(ordersSubmitDTO.getAddressBookId());
+        AddressBook addressBook = userClient.getById(ordersSubmitDTO.getAddressBookId());
         if(addressBook== null){
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
         }
